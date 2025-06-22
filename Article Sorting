@@ -1,0 +1,66 @@
+import React, { useState, useEffect } from 'react';
+
+function App() {
+  const initialArticles = [
+    { title: "AI Trends 2025", upvotes: 120, date: "2025-06-10" },
+    { title: "Web Development Guide", upvotes: 85, date: "2025-06-18" },
+    { title: "Understanding TypeScript", upvotes: 95, date: "2025-06-15" },
+    { title: "CSS Tricks You Should Know", upvotes: 70, date: "2025-06-20" }
+  ];
+
+  const [articles, setArticles] = useState([]);
+
+  useEffect(() => {
+    // Default: sort by upvotes descending
+    setArticles(
+      [...initialArticles].sort((a, b) => b.upvotes - a.upvotes)
+    );
+  }, []);
+
+  const sortByUpvotes = () => {
+    setArticles(
+      [...articles].sort((a, b) => b.upvotes - a.upvotes)
+    );
+  };
+
+  const sortByDate = () => {
+    setArticles(
+      [...articles].sort((a, b) => b.date.localeCompare(a.date)).reverse()
+    );
+  };
+
+  return (
+    <div style={{ maxWidth: '600px', margin: '50px auto', textAlign: 'center' }}>
+      <h2>Article Sorting</h2>
+      <div style={{ marginBottom: '10px' }}>
+        <button onClick={sortByUpvotes} style={{ marginRight: '10px', padding: '5px 10px' }}>
+          Most Upvoted
+        </button>
+        <button onClick={sortByDate} style={{ padding: '5px 10px' }}>
+          Most Recent
+        </button>
+      </div>
+
+      <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+        <thead>
+          <tr>
+            <th style={{ borderBottom: '1px solid #ccc', padding: '8px' }}>Title</th>
+            <th style={{ borderBottom: '1px solid #ccc', padding: '8px' }}>Upvotes</th>
+            <th style={{ borderBottom: '1px solid #ccc', padding: '8px' }}>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {articles.map((article, idx) => (
+            <tr key={idx}>
+              <td style={{ borderBottom: '1px solid #eee', padding: '8px' }}>{article.title}</td>
+              <td style={{ borderBottom: '1px solid #eee', padding: '8px' }}>{article.upvotes}</td>
+              <td style={{ borderBottom: '1px solid #eee', padding: '8px' }}>{article.date}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+export default App;
